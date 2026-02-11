@@ -208,7 +208,7 @@ export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
           <CurrencyField
             id="platform-cost"
             label="Flex 3 / Month"
-            description="Core Flex 3 platform subscription fee"
+            description="Monthly cost for Agents and IVR's. Default is 5 std, 2 Prm, 5 IVR"
             value={costs.platformCostPerMonth}
             onChange={(v) => update("platformCostPerMonth", v)}
           />

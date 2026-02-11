@@ -26,7 +26,7 @@ function generateId() {
 export function RoiCalculator() {
   // Section 1: Platform Costs (includes AI)
   const [platformCosts, setPlatformCosts] = useState<PlatformCosts>({
-    platformCostPerMonth: 0,
+    platformCostPerMonth: 1238.15,
     phoneLineMonthly: 0,
     smsServiceMonthly: 0,
     thirdPartyServices: [],
@@ -43,7 +43,7 @@ export function RoiCalculator() {
   const [staffHourlyCost, setStaffHourlyCost] = useState(60.0)
   const [interactionCosts, setInteractionCosts] = useState<InteractionCosts>({
     smsPerSegmentCost: 0.04,
-    wxConnectRemoteRunCost: 0.01,
+    wxConnectRemoteRunCost: 0.08,
     emailSendCost: 0,
   })
 
