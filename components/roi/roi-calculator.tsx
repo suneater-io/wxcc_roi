@@ -245,17 +245,19 @@ export function RoiCalculator() {
         hasVolumes={hasVolumes}
       />
 
-      {/* Dynamic Impact Stats - Always visible */}
-      <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <SavingsStats 
-            savingsPercentage={impactStats.savingsPercentage}
-            timeReductionPercentage={impactStats.timeReductionPercentage}
-            errorReductionPercentage={85} // Platform standard
-            costPerInteraction={impactStats.costPerInteraction}
-          />
+      {/* Dynamic Impact Stats - Only visible when results are live */}
+      {workflowResults.length > 0 && (
+        <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+          <div className="mx-auto max-w-5xl">
+            <SavingsStats 
+              savingsPercentage={impactStats.savingsPercentage}
+              timeReductionPercentage={impactStats.timeReductionPercentage}
+              errorReductionPercentage={85} // Platform standard
+              costPerInteraction={impactStats.costPerInteraction}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
