@@ -239,32 +239,33 @@ export function ResultsPanel({
                       </td>
                     )}
                   </tr>
-                </tbody>
-                <tfoot>
-                  <tr className="bg-muted/50 font-bold">
-                    <td className="py-3 pl-2 text-left text-foreground">Combined Totals</td>
-                    <td className="py-3 text-right tabular-nums text-foreground">
-                      {totalMinutes} min
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-muted/50 font-bold">
+                  <td className="py-3 pl-2 text-left text-foreground">Combined Totals</td>
+                  <td className="py-3 text-right tabular-nums text-foreground">
+                    {totalMinutes} min
+                  </td>
+                  <td className="py-3 text-right tabular-nums text-foreground">
+                    {formatCurrency(totalLabourSaving)}
+                  </td>
+                  <td className="py-3 text-right tabular-nums text-foreground">
+                    {formatCurrency(totalDigitalCost)}
+                  </td>
+                  <td className="py-3 text-right tabular-nums text-primary">
+                    {formatCurrency(combinedResults.combinedNetValue)}
+                  </td>
+                  <td className="py-3 text-right tabular-nums text-primary">
+                    {formatNumber(combinedResults.combinedBreakEven)}
+                  </td>
+                  {hasVolumes && (
+                    <td className="py-3 text-right tabular-nums text-accent">
+                      {combinedResults.totalAnnualBenefit !== null ? formatCurrency(combinedResults.totalAnnualBenefit) : "\u2014"}
                     </td>
-                    <td className="py-3 text-right tabular-nums text-foreground">
-                      {formatCurrency(totalLabourSaving)}
-                    </td>
-                    <td className="py-3 text-right tabular-nums text-foreground">
-                      {formatCurrency(totalDigitalCost)}
-                    </td>
-                    <td className="py-3 text-right tabular-nums text-primary">
-                      {formatCurrency(combinedResults.combinedNetValue)}
-                    </td>
-                    <td className="py-3 text-right tabular-nums text-primary">
-                      {formatNumber(combinedResults.combinedBreakEven)}
-                    </td>
-                    {hasVolumes && (
-                      <td className="py-3 text-right tabular-nums text-accent">
-                        {combinedResults.totalAnnualBenefit !== null ? formatCurrency(combinedResults.totalAnnualBenefit) : "\u2014"}
-                      </td>
-                    )}
-                  </tr>
-                </tfoot>
+                  )}
+                </tr>
+              </tfoot>
             </table>
           </div>
         </CardContent>
