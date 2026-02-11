@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { TrendingUp, Target, DollarSign, BarChart3, ArrowUpRight, Sparkles, CheckCircle2 } from "lucide-react"
+import { TrendingUp, Target, DollarSign, BarChart3, ArrowUpRight, Sparkles, CheckCircle2, CalendarDays } from "lucide-react"
 
 interface WorkflowResult {
   name: string
@@ -75,23 +75,40 @@ export function ResultsPanel({
   const isPositiveROI = combinedResults.netAnnualGain !== null && combinedResults.netAnnualGain > 0
   const roiMultiplier =
     combinedResults.roiPercent !== null ? (combinedResults.roiPercent / 100 + 1).toFixed(1) : null
+  
+  const monthlyBreakEven = Math.ceil(combinedResults.combinedBreakEven / 12)
 
   return (
     <div className="space-y-6">
       {/* Summary cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <Card className="border-primary/20 bg-primary/5">
           <CardContent className="pt-6">
             <div className="flex items-center gap-2">
               <Target className="h-4 w-4 text-primary" />
               <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Combined Break-Even
+                Annual Break-Even
               </p>
             </div>
             <p className="mt-2 font-heading text-3xl font-bold text-foreground">
               {formatNumber(combinedResults.combinedBreakEven)}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">interactions / year</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-primary/20 bg-primary/5">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2">
+              <CalendarDays className="h-4 w-4 text-primary" />
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Monthly Break-Even
+              </p>
+            </div>
+            <p className="mt-2 font-heading text-3xl font-bold text-foreground">
+              {formatNumber(monthlyBreakEven)}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">interactions / month</p>
           </CardContent>
         </Card>
 
