@@ -78,6 +78,11 @@ export function ResultsPanel({
   
   const monthlyBreakEven = Math.ceil(combinedResults.combinedBreakEven / 12)
 
+  // Calculate totals for the footer row
+  const totalMinutes = workflowResults.reduce((sum, r) => sum + r.minutesRemoved, 0)
+  const totalLabourSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
+  const totalDigitalCost = workflowResults.reduce((sum, r) => sum + r.digitalCostPerFlow, 0)
+
   return (
     <div className="space-y-6">
       {/* Summary cards */}
@@ -234,8 +239,32 @@ export function ResultsPanel({
                       </td>
                     )}
                   </tr>
-                ))}
-              </tbody>
+                </tbody>
+                <tfoot>
+                  <tr className="bg-muted/50 font-bold">
+                    <td className="py-3 pl-2 text-left text-foreground">Combined Totals</td>
+                    <td className="py-3 text-right tabular-nums text-foreground">
+                      {totalMinutes} min
+                    </td>
+                    <td className="py-3 text-right tabular-nums text-foreground">
+                      {formatCurrency(totalLabourSaving)}
+                    </td>
+                    <td className="py-3 text-right tabular-nums text-foreground">
+                      {formatCurrency(totalDigitalCost)}
+                    </td>
+                    <td className="py-3 text-right tabular-nums text-primary">
+                      {formatCurrency(combinedResults.combinedNetValue)}
+                    </td>
+                    <td className="py-3 text-right tabular-nums text-primary">
+                      {formatNumber(combinedResults.combinedBreakEven)}
+                    </td>
+                    {hasVolumes && (
+                      <td className="py-3 text-right tabular-nums text-accent">
+                        {combinedResults.totalAnnualBenefit !== null ? formatCurrency(combinedResults.totalAnnualBenefit) : "\u2014"}
+                      </td>
+                    )}
+                  </tr>
+                </tfoot>
             </table>
           </div>
         </CardContent>
