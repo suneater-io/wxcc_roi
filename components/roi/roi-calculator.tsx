@@ -186,22 +186,23 @@ export function RoiCalculator() {
 
   // Impact Stats Derivation
   const impactStats = useMemo(() => {
-    if (workflowResults.length === 0) return null
+    if (workflowResults.length === 0) return {
+      savingsPercentage: undefined,
+      timeReductionPercentage: undefined,
+      costPerInteraction: undefined,
+    }
 
     const totalLabourSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
     const totalDigitalCost = workflowResults.reduce((sum, r) => sum + r.digitalCostPerFlow, 0)
     
-    // Efficiency gain: (Labour - Digital) / Labour
     const savingsPercentage = totalLabourSaving > 0 
       ? Math.round(((totalLabourSaving - totalDigitalCost) / totalLabourSaving) * 100)
       : 0
 
-    // Time reduction: Assume a 45-minute baseline for manual tasks if not specified
     const totalMinutesRemoved = workflowResults.reduce((sum, r) => sum + r.minutesRemoved, 0)
     const estimatedBaseline = workflowResults.length * 45
     const timeReductionPercentage = Math.round((totalMinutesRemoved / estimatedBaseline) * 100)
 
-    // Average digital cost per interaction
     const avgDigitalCost = totalDigitalCost / workflowResults.length
 
     return {
@@ -244,19 +245,17 @@ export function RoiCalculator() {
         hasVolumes={hasVolumes}
       />
 
-      {/* Dynamic Impact Stats */}
-      {impactStats && (
-        <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-          <div className="mx-auto max-w-5xl">
-            <SavingsStats 
-              savingsPercentage={impactStats.savingsPercentage}
-              timeReductionPercentage={impactStats.timeReductionPercentage}
-              errorReductionPercentage={85} // Platform standard
-              costPerInteraction={impactStats.costPerInteraction}
-            />
-          </div>
+      {/* Dynamic Impact Stats - Always visible */}
+      <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <SavingsStats 
+            savingsPercentage={impactStats.savingsPercentage}
+            timeReductionPercentage={impactStats.timeReductionPercentage}
+            errorReductionPercentage={85} // Platform standard
+            costPerInteraction={impactStats.costPerInteraction}
+          />
         </div>
-      )}
+      </div>
     </div>
   )
 }
