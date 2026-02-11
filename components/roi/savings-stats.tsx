@@ -19,25 +19,25 @@ export function SavingsStats({
   const stats = [
     {
       value: `${savingsPercentage}%`,
-      label: "Expected Savings per Workflow",
+      label: "Efficiency Gain per Flow",
       icon: TrendingUp,
       color: "text-green-600",
     },
     {
       value: `${timeReductionPercentage}%`,
-      label: "Time Reduction",
+      label: "Est. Time Reduction",
       icon: Clock,
       color: "text-blue-600",
     },
     {
       value: `${errorReductionPercentage}%`,
-      label: "Error Reduction",
+      label: "Platform Error Reduction",
       icon: Zap,
       color: "text-amber-600",
     },
     {
-      value: `$${costPerInteraction}`,
-      label: "Cost per Interaction",
+      value: `$${costPerInteraction.toFixed(2)}`,
+      label: "Digital Cost / Interaction",
       icon: DollarSign,
       color: "text-purple-600",
     },
@@ -49,7 +49,7 @@ export function SavingsStats({
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
-            <Card key={index} className="flex flex-col items-center justify-center p-6 text-center hover:shadow-lg transition-shadow">
+            <Card key={index} className="flex flex-col items-center justify-center p-6 text-center hover:shadow-lg transition-shadow bg-card">
               <Icon className={`h-8 w-8 ${stat.color} mb-4`} />
               <div className={`text-4xl font-bold ${stat.color} mb-2`}>
                 {stat.value}

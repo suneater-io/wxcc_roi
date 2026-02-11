@@ -1,5 +1,4 @@
 import { RoiCalculator } from "@/components/roi/roi-calculator"
-import { SavingsStats } from "@/components/roi/savings-stats"
 import { Calculator } from "lucide-react"
 
 export default function Page() {
@@ -22,21 +21,9 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Calculator */}
+      {/* Calculator (now includes dynamic Impact Stats) */}
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         <RoiCalculator />
-      </div>
-
-      {/* Impact Stats */}
-      <div className="border-t bg-muted/30">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <SavingsStats 
-            savingsPercentage={42}
-            timeReductionPercentage={68}
-            errorReductionPercentage={85}
-            costPerInteraction={12.50}
-          />
-        </div>
       </div>
 
       {/* Footer */}
