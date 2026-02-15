@@ -13,6 +13,7 @@ export interface Workflow {
   smsPerFlow: number
   emailsPerFlow: number
   wxConnectRunsPerFlow: number
+  lettersPerFlow: number
   annualVolume: number | null
 }
 
@@ -86,7 +87,7 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
         ) : (
           <div className="space-y-4">
             {/* Column headers for lg+ */}
-            <div className="hidden items-center gap-3 border-b pb-2 lg:grid lg:grid-cols-[1fr_100px_80px_80px_80px_100px_100px_36px]">
+            <div className="hidden items-center gap-3 border-b pb-2 lg:grid lg:grid-cols-[1fr_100px_80px_80px_80px_80px_100px_100px_36px]">
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Workflow Name
               </span>
@@ -94,13 +95,16 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
                 Min. Removed
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                SMS Sent
+                SMS
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Emails
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 WX Runs
+              </span>
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Letters
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Cost / Flow
@@ -116,7 +120,7 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
               return (
                 <div
                   key={workflow.id}
-                  className="grid grid-cols-1 items-end gap-3 rounded-lg border bg-card p-4 lg:grid-cols-[1fr_100px_80px_80px_80px_100px_100px_36px] lg:border-0 lg:bg-transparent lg:p-0"
+                  className="grid grid-cols-1 items-end gap-3 rounded-lg border bg-card p-4 lg:grid-cols-[1fr_100px_80px_80px_80px_80px_100px_100px_36px] lg:border-0 lg:bg-transparent lg:p-0"
                 >
                   <div className="space-y-1">
                     <Label className="text-xs lg:sr-only">Workflow Name</Label>
@@ -171,6 +175,18 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
                       value={workflow.wxConnectRunsPerFlow || ""}
                       onChange={(e) =>
                         onUpdate(workflow.id, "wxConnectRunsPerFlow", Number.parseFloat(e.target.value) || 0)
+                      }
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs lg:sr-only">Letters Sent</Label>
+                    <Input
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      value={workflow.lettersPerFlow || ""}
+                      onChange={(e) =>
+                        onUpdate(workflow.id, "lettersPerFlow", Number.parseFloat(e.target.value) || 0)
                       }
                     />
                   </div>

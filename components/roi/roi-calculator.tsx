@@ -11,11 +11,11 @@ import { ResultsPanel } from "./results-panel"
 import { SavingsStats } from "./savings-stats"
 
 const DEFAULT_WORKFLOWS: Omit<Workflow, "id">[] = [
-  { name: "Pre-Admission", minutesRemoved: 30, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, annualVolume: null },
-  { name: "Appointment Confirmation", minutesRemoved: 20, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, annualVolume: null },
-  { name: "Appointment Reschedule", minutesRemoved: 15, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, annualVolume: null },
-  { name: "Appointment Cancellation", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, annualVolume: null },
-  { name: "Post-Operative Notification", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 2, wxConnectRunsPerFlow: 1, annualVolume: null },
+  { name: "Pre-Admission", minutesRemoved: 30, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: null },
+  { name: "Appointment Confirmation", minutesRemoved: 20, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
+  { name: "Appointment Reschedule", minutesRemoved: 15, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
+  { name: "Appointment Cancellation", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
+  { name: "Post-Operative Notification", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 2, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: null },
 ]
 
 let nextId = 1
@@ -89,6 +89,7 @@ export function RoiCalculator() {
         smsPerFlow: 0,
         emailsPerFlow: 0,
         wxConnectRunsPerFlow: 0,
+        lettersPerFlow: 0,
         annualVolume: null,
       },
     ])
@@ -121,7 +122,8 @@ export function RoiCalculator() {
     return validWorkflows.map((w) => {
       const hoursRemoved = w.minutesRemoved / 60
       const labourSaving = hoursRemoved * staffHourlyCost
-      const totalManualSaving = labourSaving + postagePaperCost
+      const postageSaving = w.lettersPerFlow * postagePaperCost
+      const totalManualSaving = labourSaving + postageSaving
       const digitalCost = calcWorkflowDigitalCost(w)
       const netValuePerInteraction = totalManualSaving - digitalCost
       const breakEvenInteractions =
@@ -134,7 +136,7 @@ export function RoiCalculator() {
       return {
         name: w.name,
         minutesRemoved: w.minutesRemoved,
-        labourSaving: totalManualSaving, // Renamed conceptually to total manual saving
+        labourSaving: totalManualSaving,
         digitalCostPerFlow: digitalCost,
         netValuePerInteraction,
         breakEvenInteractions:
