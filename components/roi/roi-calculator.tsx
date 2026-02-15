@@ -142,6 +142,7 @@ export function RoiCalculator() {
         breakEvenInteractions:
           breakEvenInteractions === Infinity ? 0 : breakEvenInteractions,
         annualBenefit,
+        annualHoursSaved: w.annualVolume !== null ? (w.minutesRemoved * w.annualVolume) / 60 : 0
       }
     })
   }, [validWorkflows, staffHourlyCost, postagePaperCost, calcWorkflowDigitalCost, totalPlatformCost])
@@ -190,31 +191,30 @@ export function RoiCalculator() {
 
   // Impact Stats Derivation
   const impactStats = useMemo(() => {
-    if (workflowResults.length === 0) return {
-      savingsPercentage: undefined,
-      timeReductionPercentage: undefined,
-      costPerInteraction: undefined,
+    const hasVolumes = workflowResults.some((r) => r.annualBenefit !== null)
+    if (!hasVolumes) return {
+      fteReclaimed: 0,
+      paybackMonths: 0,
+      returnMultiplier: 0,
+      totalAnnualHours: 0,
     }
 
-    const totalManualSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
-    const totalDigitalCost = workflowResults.reduce((sum, r) => sum + r.digitalCostPerFlow, 0)
+    const totalAnnualHours = workflowResults.reduce((sum, r) => sum + r.annualHoursSaved, 0)
+    const fteReclaimed = totalAnnualHours / 1920 // Standard working hours per year
+
+    const totalAnnualBenefit = workflowResults.reduce((sum, r) => sum + (r.annualBenefit ?? 0), 0)
+    const monthlyBenefit = totalAnnualBenefit / 12
+    const paybackMonths = monthlyBenefit > 0 ? totalPlatformCost / monthlyBenefit : 0
     
-    const savingsPercentage = totalManualSaving > 0 
-      ? Math.round(((totalManualSaving - totalDigitalCost) / totalManualSaving) * 100)
-      : 0
-
-    const totalMinutesRemoved = workflowResults.reduce((sum, r) => sum + r.minutesRemoved, 0)
-    const estimatedBaseline = workflowResults.length * 45
-    const timeReductionPercentage = Math.round((totalMinutesRemoved / estimatedBaseline) * 100)
-
-    const avgDigitalCost = totalDigitalCost / workflowResults.length
+    const returnMultiplier = totalPlatformCost > 0 ? totalAnnualBenefit / totalPlatformCost : 0
 
     return {
-      savingsPercentage,
-      timeReductionPercentage,
-      costPerInteraction: avgDigitalCost,
+      fteReclaimed,
+      paybackMonths,
+      returnMultiplier,
+      totalAnnualHours,
     }
-  }, [workflowResults])
+  }, [workflowResults, totalPlatformCost])
 
   const hasVolumes = workflowResults.some((r) => r.annualBenefit !== null)
 
@@ -251,15 +251,16 @@ export function RoiCalculator() {
         hasVolumes={hasVolumes}
       />
 
-      {/* Dynamic Impact Stats - Only visible when results are live */}
-      {workflowResults.length > 0 && (
+      {/* Dynamic Impact Stats - Only visible when volumes are provided */}
+      {hasVolumes && (
         <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div className="mx-auto max-w-5xl">
             <SavingsStats 
-              savingsPercentage={impactStats.savingsPercentage}
-              timeReductionPercentage={impactStats.timeReductionPercentage}
-              errorReductionPercentage={85} // Platform standard
-              costPerInteraction={impactStats.costPerInteraction}
+              fteReclaimed={impactStats.fteReclaimed}
+              paybackMonths={impactStats.paybackMonths}
+              returnMultiplier={impactStats.returnMultiplier}
+              totalAnnualHours={impactStats.totalAnnualHours}
+              isPositive={combinedResults.roiPercent !== null && combinedResults.roiPercent > 0}
             />
           </div>
         </div>
