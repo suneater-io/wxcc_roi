@@ -13,7 +13,9 @@ import {
   CalendarDays,
   Calculator,
   HelpCircle,
-  ChevronDown
+  ChevronDown,
+  Users,
+  Zap
 } from "lucide-react"
 import {
   Accordion,
