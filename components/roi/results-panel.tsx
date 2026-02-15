@@ -196,7 +196,7 @@ export function ResultsPanel({
                     Minutes Saved
                   </th>
                   <th className="pb-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Labour Saving
+                    Manual Process Saving
                   </th>
                   <th className="pb-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
                     Digital Cost
@@ -280,6 +280,9 @@ export function ResultsPanel({
             <li>
               <strong className="text-foreground">Flex 3 cost is fixed</strong> — the{" "}
               {formatCurrency(annualPlatformCost)} fee does not scale with usage.
+            </li>
+            <li>
+              <strong className="text-foreground">Manual Process Saving</strong> — includes both the cost of staff time and the elimination of physical materials like paper and postage.
             </li>
             <li>
               <strong className="text-foreground">Break-even</strong> represents the minimum number of
@@ -376,7 +379,7 @@ export function ResultsPanel({
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <div>
                       <p className="text-sm font-medium text-foreground">{formatCurrency(combinedResults.combinedNetValue)} saved per interaction set</p>
-                      <p className="text-xs text-muted-foreground">Across all {workflowResults.length} automated workflows</p>
+                      <p className="text-xs text-muted-foreground">Includes elimination of paper, printing, and postage costs</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
