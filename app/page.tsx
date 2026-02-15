@@ -21,9 +21,7 @@ export default function Page() {
             </div>
           </div>
           <p className="text-sm text-muted-foreground max-w-3xl leading-relaxed">
-            This tool helps healthcare organizations quantify the financial and operational impact of automating patient interactions. 
-            By comparing current manual labor costs against digital channel expenses, it calculates the break-even point and potential 
-            return on investment (ROI) for your Digital Front Door platform.
+            This tool helps quantify the financial and operational impact of automating patient interactions through a Digital Front Door solution. By comparing current manual costs against digital channel costs, it calculates the break-even point and potential return on investment (ROI) for your Digital Front Door platform.
           </p>
         </div>
       </header>
