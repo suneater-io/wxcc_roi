@@ -104,7 +104,7 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
                 WX Runs
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Letters
+                Letters Removed
               </span>
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Cost / Flow
@@ -179,7 +179,7 @@ export function WorkflowList({ workflows, unitCosts, onAdd, onRemove, onUpdate, 
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-xs lg:sr-only">Letters Sent</Label>
+                    <Label className="text-xs lg:sr-only">Letters no longer being sent</Label>
                     <Input
                       type="number"
                       min="0"
