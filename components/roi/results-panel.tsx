@@ -105,8 +105,8 @@ export function ResultsPanel({
 
   return (
     <div className="space-y-6">
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      {/* Summary cards (Small boxes) */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Card className="border-primary/20 bg-primary/5">
           <CardContent className="pt-6">
             <div className="flex items-center gap-2">
@@ -151,44 +151,6 @@ export function ResultsPanel({
             <p className="mt-1 text-xs text-muted-foreground">combined per set</p>
           </CardContent>
         </Card>
-
-        {hasVolumes && combinedResults.totalAnnualBenefit !== null && (
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-accent" />
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  Net Annual Gain
-                </p>
-              </div>
-              <p
-                className={`mt-2 font-heading text-3xl font-bold ${isPositiveROI ? "text-accent" : "text-destructive"}`}
-              >
-                {formatCurrency(combinedResults.netAnnualGain!)}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                after {formatCurrency(annualPlatformCost)} Flex 3 cost
-              </p>
-            </CardContent>
-          </Card>
-        )}
-
-        {hasVolumes && combinedResults.roiPercent !== null && (
-          <Card className={isPositiveROI ? "border-accent/20 bg-accent/5" : "border-destructive/20 bg-destructive/5"}>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-2">
-                <ArrowUpRight className={`h-4 w-4 ${isPositiveROI ? "text-accent" : "text-destructive"}`} />
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">ROI</p>
-              </div>
-              <p
-                className={`mt-2 font-heading text-3xl font-bold ${isPositiveROI ? "text-accent" : "text-destructive"}`}
-              >
-                {combinedResults.roiPercent!.toFixed(1)}%
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">return on investment</p>
-            </CardContent>
-          </Card>
-        )}
       </div>
 
       {/* Per-workflow breakdown */}
@@ -291,7 +253,7 @@ export function ResultsPanel({
         </CardContent>
       </Card>
 
-      {/* Big ROI Showcase */}
+      {/* Big ROI Showcase (ROI at a Glance) */}
       {hasVolumes && combinedResults.roiPercent !== null && combinedResults.netAnnualGain !== null && (
         <div className="relative overflow-hidden rounded-2xl border-2 border-accent/30 bg-gradient-to-br from-accent/5 via-card to-primary/5">
           {/* Subtle background pattern */}
@@ -397,7 +359,7 @@ export function ResultsPanel({
                 <AccordionItem value="math-logic" className="border-none">
                   <AccordionTrigger className="flex justify-center gap-2 rounded-lg bg-background/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:bg-background/80 hover:no-underline">
                     <HelpCircle className="h-3.5 w-3.5" />
-                    How the Math Works: Why are these numbers so high?
+                    How the math works
                   </AccordionTrigger>
                   <AccordionContent className="pt-6">
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
