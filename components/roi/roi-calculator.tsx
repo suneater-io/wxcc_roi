@@ -11,11 +11,11 @@ import { ResultsPanel } from "./results-panel"
 import { SavingsStats } from "./savings-stats"
 
 const DEFAULT_WORKFLOWS: Omit<Workflow, "id">[] = [
-  { name: "Pre-Admission", minutesRemoved: 30, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: null },
-  { name: "Appointment Confirmation", minutesRemoved: 20, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
-  { name: "Appointment Reschedule", minutesRemoved: 15, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
-  { name: "Appointment Cancellation", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: null },
-  { name: "Post-Operative Notification", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 2, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: null },
+  { name: "Pre-Admission", minutesRemoved: 30, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: 5000 },
+  { name: "Appointment Confirmation", minutesRemoved: 20, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: 12000 },
+  { name: "Appointment Reschedule", minutesRemoved: 15, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: 3000 },
+  { name: "Appointment Cancellation", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 0, annualVolume: 2000 },
+  { name: "Post-Operative Notification", minutesRemoved: 10, smsPerFlow: 1, emailsPerFlow: 2, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: 4000 },
 ]
 
 let nextId = 1
