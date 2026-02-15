@@ -255,9 +255,9 @@ export function RoiCalculator() {
 
       {/* Break-Even Stats - Only visible when workflows are present */}
       {hasWorkflows && (
-        <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="-mx-4 border-t bg-background px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div className="mx-auto max-w-5xl">
-            <BreakEvenStats 
+            <BreakEvenStats
               annualBreakEven={combinedResults.combinedBreakEven}
               monthlyBreakEven={Math.ceil(combinedResults.combinedBreakEven / 12)}
               netValuePerInteraction={combinedResults.combinedNetValue}
@@ -268,9 +268,9 @@ export function RoiCalculator() {
 
       {/* Dynamic Impact Stats - Only visible when volumes are provided */}
       {hasVolumes && (
-        <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="-mx-4 border-t bg-background px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div className="mx-auto max-w-5xl">
-            <SavingsStats 
+            <SavingsStats
               fteReclaimed={impactStats.fteReclaimed}
               paybackMonths={impactStats.paybackMonths}
               returnMultiplier={impactStats.returnMultiplier}
