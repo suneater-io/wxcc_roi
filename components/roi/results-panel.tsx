@@ -396,7 +396,7 @@ export function ResultsPanel({
                   <AccordionTrigger className="flex justify-center gap-2 rounded-lg bg-background/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:bg-background/80 hover:no-underline">
                     <HelpCircle className="h-3.5 w-3.5" />
                     How the Math Works: Why are these numbers so high?
-                  </ChevronDown>
+                  </AccordionTrigger>
                   <AccordionContent className="pt-6">
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                       <div className="space-y-3">
