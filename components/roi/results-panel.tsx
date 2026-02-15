@@ -2,7 +2,25 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { TrendingUp, Target, DollarSign, BarChart3, ArrowUpRight, Sparkles, CheckCircle2, CalendarDays } from "lucide-react"
+import { 
+  TrendingUp, 
+  Target, 
+  DollarSign, 
+  BarChart3, 
+  ArrowUpRight, 
+  Sparkles, 
+  CheckCircle2, 
+  CalendarDays,
+  Calculator,
+  HelpCircle,
+  ChevronDown
+} from "lucide-react"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 interface WorkflowResult {
   name: string
@@ -271,39 +289,6 @@ export function ResultsPanel({
         </CardContent>
       </Card>
 
-      {/* Interpretation */}
-      <Card className="border-primary/20">
-        <CardContent className="pt-6">
-          <h3 className="font-heading text-sm font-semibold text-foreground">How to Read These Results</h3>
-          <Separator className="my-3" />
-          <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed">
-            <li>
-              <strong className="text-foreground">Flex 3 cost is fixed</strong> — the{" "}
-              {formatCurrency(annualPlatformCost)} fee does not scale with usage.
-            </li>
-            <li>
-              <strong className="text-foreground">Manual Process Saving</strong> — includes both the cost of staff time and the elimination of physical materials like paper and postage.
-            </li>
-            <li>
-              <strong className="text-foreground">Break-even</strong> represents the minimum number of
-              interactions needed per year to offset the platform cost.
-            </li>
-            <li>
-              <strong className="text-foreground">Every interaction beyond break-even</strong> delivers direct
-              net operational benefit to your organisation.
-            </li>
-            {hasVolumes && combinedResults.netAnnualGain !== null && combinedResults.netAnnualGain > 0 && (
-              <li>
-                <strong className="text-foreground">
-                  At your projected volumes, the platform generates {formatCurrency(combinedResults.netAnnualGain)} in
-                  net annual savings.
-                </strong>
-              </li>
-            )}
-          </ul>
-        </CardContent>
-      </Card>
-
       {/* Big ROI Showcase */}
       {hasVolumes && combinedResults.roiPercent !== null && combinedResults.netAnnualGain !== null && (
         <div className="relative overflow-hidden rounded-2xl border-2 border-accent/30 bg-gradient-to-br from-accent/5 via-card to-primary/5">
@@ -403,6 +388,58 @@ export function ResultsPanel({
                 </div>
               </div>
             )}
+
+            {/* Transparency Section */}
+            <div className="mx-auto mt-12 max-w-3xl">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="math-logic" className="border-none">
+                  <AccordionTrigger className="flex justify-center gap-2 rounded-lg bg-background/50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:bg-background/80 hover:no-underline">
+                    <HelpCircle className="h-3.5 w-3.5" />
+                    How the Math Works: Why are these numbers so high?
+                  </ChevronDown>
+                  <AccordionContent className="pt-6">
+                    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Users className="h-4 w-4 text-primary" />
+                          <h4 className="font-bold">1. Manual Process Saving</h4>
+                        </div>
+                        <p className="text-xs leading-relaxed text-muted-foreground">
+                          We calculate the cost of human labor (e.g., $60/hr = $1.00/min) and add physical material costs (postage/paper). If a workflow saves 30 minutes, that's <span className="font-medium text-foreground">$30.00 in reclaimed capacity</span> per journey.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Zap className="h-4 w-4 text-primary" />
+                          <h4 className="font-bold">2. Digital Cost</h4>
+                        </div>
+                        <p className="text-xs leading-relaxed text-muted-foreground">
+                          We calculate the cost of automation (SMS, Email, and API runs). These typically cost <span className="font-medium text-foreground">only a few cents</span> per journey, creating massive leverage against expensive human minutes.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-foreground">
+                          <DollarSign className="h-4 w-4 text-primary" />
+                          <h4 className="font-bold">3. Net Value per Interaction</h4>
+                        </div>
+                        <p className="text-xs leading-relaxed text-muted-foreground">
+                          By subtracting the digital cost from the manual saving, we find the "profit" per interaction. This is the <span className="font-medium text-foreground">direct operational benefit</span> realized every time the system runs.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-foreground">
+                          <Target className="h-4 w-4 text-primary" />
+                          <h4 className="font-bold">4. Fixed Cost Leverage</h4>
+                        </div>
+                        <p className="text-xs leading-relaxed text-muted-foreground">
+                          Because the platform cost is <span className="font-medium text-foreground">fixed</span>, it doesn't scale with usage. Once you pass the break-even point, every additional interaction delivers 100% of its net value to the organization's bottom line.
+                        </p>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </div>
         </div>
       )}
