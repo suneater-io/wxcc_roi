@@ -96,8 +96,6 @@ export function ResultsPanel({
   const roiMultiplier =
     combinedResults.roiPercent !== null ? (combinedResults.roiPercent / 100 + 1).toFixed(1) : null
   
-  const monthlyBreakEven = Math.ceil(combinedResults.combinedBreakEven / 12)
-
   // Calculate totals for the footer row
   const totalMinutes = workflowResults.reduce((sum, r) => sum + r.minutesRemoved, 0)
   const totalLabourSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
@@ -105,54 +103,6 @@ export function ResultsPanel({
 
   return (
     <div className="space-y-6">
-      {/* Summary cards (Small boxes) */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-2">
-              <Target className="h-4 w-4 text-primary" />
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Annual Break-Even
-              </p>
-            </div>
-            <p className="mt-2 font-heading text-3xl font-bold text-foreground">
-              {formatNumber(combinedResults.combinedBreakEven)}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">interactions / year</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-2">
-              <CalendarDays className="h-4 w-4 text-primary" />
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Monthly Break-Even
-              </p>
-            </div>
-            <p className="mt-2 font-heading text-3xl font-bold text-foreground">
-              {formatNumber(monthlyBreakEven)}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">interactions / month</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-primary" />
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Net Value / Interaction
-              </p>
-            </div>
-            <p className="mt-2 font-heading text-3xl font-bold text-foreground">
-              {formatCurrency(combinedResults.combinedNetValue)}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">combined per set</p>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Per-workflow breakdown */}
       <Card>
         <CardHeader>

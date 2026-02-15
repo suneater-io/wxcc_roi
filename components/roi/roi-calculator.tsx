@@ -9,6 +9,7 @@ import {
 import { WorkflowList, type Workflow } from "./workflow-list"
 import { ResultsPanel } from "./results-panel"
 import { SavingsStats } from "./savings-stats"
+import { BreakEvenStats } from "./break-even-stats"
 
 const DEFAULT_WORKFLOWS: Omit<Workflow, "id">[] = [
   { name: "Pre-Admission", minutesRemoved: 30, smsPerFlow: 2, emailsPerFlow: 1, wxConnectRunsPerFlow: 1, lettersPerFlow: 1, annualVolume: 5000 },
@@ -217,6 +218,7 @@ export function RoiCalculator() {
   }, [workflowResults, totalPlatformCost])
 
   const hasVolumes = workflowResults.some((r) => r.annualBenefit !== null)
+  const hasWorkflows = workflowResults.length > 0
 
   return (
     <div className="space-y-6">
@@ -242,6 +244,19 @@ export function RoiCalculator() {
         onUpdate={handleUpdateWorkflow}
         onLoadDefaults={handleLoadDefaults}
       />
+
+      {/* Break-Even Stats - Only visible when workflows are present */}
+      {hasWorkflows && (
+        <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+          <div className="mx-auto max-w-5xl">
+            <BreakEvenStats 
+              annualBreakEven={combinedResults.combinedBreakEven}
+              monthlyBreakEven={Math.ceil(combinedResults.combinedBreakEven / 12)}
+              netValuePerInteraction={combinedResults.combinedNetValue}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Results */}
       <ResultsPanel
