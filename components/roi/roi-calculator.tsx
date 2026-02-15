@@ -41,6 +41,7 @@ export function RoiCalculator() {
 
   // Section 2: Interaction Costs (human + digital channels)
   const [staffHourlyCost, setStaffHourlyCost] = useState(60.0)
+  const [postagePaperCost, setPostagePaperCost] = useState(2.0)
   const [interactionCosts, setInteractionCosts] = useState<InteractionCosts>({
     smsPerSegmentCost: 0.04,
     wxConnectRemoteRunCost: 0.08,
@@ -120,8 +121,9 @@ export function RoiCalculator() {
     return validWorkflows.map((w) => {
       const hoursRemoved = w.minutesRemoved / 60
       const labourSaving = hoursRemoved * staffHourlyCost
+      const totalManualSaving = labourSaving + postagePaperCost
       const digitalCost = calcWorkflowDigitalCost(w)
-      const netValuePerInteraction = labourSaving - digitalCost
+      const netValuePerInteraction = totalManualSaving - digitalCost
       const breakEvenInteractions =
         netValuePerInteraction > 0
           ? Math.ceil(totalPlatformCost / netValuePerInteraction)
@@ -132,7 +134,7 @@ export function RoiCalculator() {
       return {
         name: w.name,
         minutesRemoved: w.minutesRemoved,
-        labourSaving,
+        labourSaving: totalManualSaving, // Renamed conceptually to total manual saving
         digitalCostPerFlow: digitalCost,
         netValuePerInteraction,
         breakEvenInteractions:
@@ -140,7 +142,7 @@ export function RoiCalculator() {
         annualBenefit,
       }
     })
-  }, [validWorkflows, staffHourlyCost, calcWorkflowDigitalCost, totalPlatformCost])
+  }, [validWorkflows, staffHourlyCost, postagePaperCost, calcWorkflowDigitalCost, totalPlatformCost])
 
   const combinedResults = useMemo(() => {
     if (workflowResults.length === 0) {
@@ -192,11 +194,11 @@ export function RoiCalculator() {
       costPerInteraction: undefined,
     }
 
-    const totalLabourSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
+    const totalManualSaving = workflowResults.reduce((sum, r) => sum + r.labourSaving, 0)
     const totalDigitalCost = workflowResults.reduce((sum, r) => sum + r.digitalCostPerFlow, 0)
     
-    const savingsPercentage = totalLabourSaving > 0 
-      ? Math.round(((totalLabourSaving - totalDigitalCost) / totalLabourSaving) * 100)
+    const savingsPercentage = totalManualSaving > 0 
+      ? Math.round(((totalManualSaving - totalDigitalCost) / totalManualSaving) * 100)
       : 0
 
     const totalMinutesRemoved = workflowResults.reduce((sum, r) => sum + r.minutesRemoved, 0)
@@ -225,6 +227,8 @@ export function RoiCalculator() {
         onChange={setInteractionCosts}
         staffHourlyCost={staffHourlyCost}
         onStaffHourlyCostChange={setStaffHourlyCost}
+        postagePaperCost={postagePaperCost}
+        onPostagePaperCostChange={setPostagePaperCost}
       />
 
       {/* Workflows */}

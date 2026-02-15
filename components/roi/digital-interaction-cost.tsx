@@ -24,6 +24,8 @@ interface DigitalInteractionCostProps {
   onChange: (costs: InteractionCosts) => void
   staffHourlyCost: number
   onStaffHourlyCostChange: (value: number) => void
+  postagePaperCost: number
+  onPostagePaperCostChange: (value: number) => void
 }
 
 function CurrencyField({
@@ -70,6 +72,8 @@ export function DigitalInteractionCost({
   onChange,
   staffHourlyCost,
   onStaffHourlyCostChange,
+  postagePaperCost,
+  onPostagePaperCostChange,
 }: DigitalInteractionCostProps) {
   const update = (field: keyof InteractionCosts, value: number) => {
     onChange({ ...costs, [field]: value })
@@ -108,19 +112,27 @@ export function DigitalInteractionCost({
               <Users className="h-4 w-4 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">Human Cost</p>
+              <p className="text-sm font-medium text-foreground">Manual Process Costs (Removed)</p>
               <p className="text-xs text-muted-foreground">
-                Labour cost baseline for savings calculations
+                Labour and material costs eliminated by automation
               </p>
             </div>
           </div>
-          <div className="max-w-xs">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <CurrencyField
               id="staff-hourly"
               label="Staff Hourly Rate"
-              description="Average fully-loaded labour cost per hour (salary + benefits + overheads)"
+              description="Average fully-loaded labour cost per hour"
               value={staffHourlyCost}
               onChange={onStaffHourlyCostChange}
+              step="0.01"
+            />
+            <CurrencyField
+              id="postage-cost"
+              label="Postage & Paper Cost"
+              description="Cost of physical mail/printing per manual workflow"
+              value={postagePaperCost}
+              onChange={onPostagePaperCostChange}
               step="0.01"
             />
           </div>
