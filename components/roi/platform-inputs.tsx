@@ -1,8 +1,6 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Card,
   CardContent,
@@ -17,7 +15,11 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Server, Plus, Trash2, ChevronDown, Bot } from "lucide-react"
+import { CurrencyField, NumberField } from "./input-fields"
+import { formatCurrency } from "@/lib/utils"
 
 export interface ThirdPartyService {
   id: string
@@ -44,76 +46,6 @@ export interface PlatformCosts {
 interface PlatformInputsProps {
   costs: PlatformCosts
   onChange: (costs: PlatformCosts) => void
-}
-
-function CurrencyField({
-  id,
-  label,
-  description,
-  value,
-  onChange,
-  step = "0.01",
-}: {
-  id: string
-  label: string
-  description: string
-  value: number
-  onChange: (v: number) => void
-  step?: string
-}) {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-medium">
-        {label}
-      </Label>
-      <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-          $
-        </span>
-        <Input
-          id={id}
-          type="number"
-          step={step}
-          min="0"
-          value={value}
-          onChange={(e) => onChange(Number.parseFloat(e.target.value) || 0)}
-          className="pl-7"
-        />
-      </div>
-      <p className="text-xs text-muted-foreground">{description}</p>
-    </div>
-  )
-}
-
-function NumberField({
-  id,
-  label,
-  description,
-  value,
-  onChange,
-}: {
-  id: string
-  label: string
-  description: string
-  value: number
-  onChange: (v: number) => void
-}) {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-medium">
-        {label}
-      </Label>
-      <Input
-        id={id}
-        type="number"
-        step="1"
-        min="0"
-        value={value}
-        onChange={(e) => onChange(Number.parseFloat(e.target.value) || 0)}
-      />
-      <p className="text-xs text-muted-foreground">{description}</p>
-    </div>
-  )
 }
 
 export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
@@ -180,11 +112,6 @@ export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
   }
 
   const totalForPeriod = totalMonthly * costs.periodMonths
-  const fmt = (v: number) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(v)
 
   return (
     <Card>
@@ -296,7 +223,7 @@ export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
             <p className="text-xs text-muted-foreground">
               AI total:{" "}
               <span className="font-medium text-foreground">
-                {fmt(aiMonthlyTotal)}
+                {formatCurrency(aiMonthlyTotal)}
               </span>{" "}
               / month
             </p>
@@ -390,7 +317,7 @@ export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
                 <p className="text-xs text-muted-foreground">
                   3rd party total:{" "}
                   <span className="font-medium text-foreground">
-                    {fmt(thirdPartyTotal)}
+                    {formatCurrency(thirdPartyTotal)}
                   </span>{" "}
                   / month
                 </p>
@@ -427,10 +354,10 @@ export function PlatformInputs({ costs, onChange }: PlatformInputsProps) {
               Total Platform Cost ({costs.periodMonths} mo)
             </p>
             <p className="mt-1 font-heading text-3xl font-bold text-foreground">
-              {fmt(totalForPeriod)}
+              {formatCurrency(totalForPeriod)}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              {fmt(totalMonthly)} / month
+              {formatCurrency(totalMonthly)} / month
             </p>
           </div>
         </div>

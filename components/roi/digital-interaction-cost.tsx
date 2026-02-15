@@ -1,8 +1,6 @@
 "use client"
 
 import { useMemo } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Card,
   CardContent,
@@ -12,6 +10,8 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Zap, Users } from "lucide-react"
+import { CurrencyField } from "./input-fields"
+import { formatCurrency } from "@/lib/utils"
 
 export interface InteractionCosts {
   smsPerSegmentCost: number
@@ -26,45 +26,6 @@ interface DigitalInteractionCostProps {
   onStaffHourlyCostChange: (value: number) => void
   postagePaperCost: number
   onPostagePaperCostChange: (value: number) => void
-}
-
-function CurrencyField({
-  id,
-  label,
-  description,
-  value,
-  onChange,
-  step = "0.001",
-}: {
-  id: string
-  label: string
-  description: string
-  value: number
-  onChange: (v: number) => void
-  step?: string
-}) {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-medium">
-        {label}
-      </Label>
-      <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-          $
-        </span>
-        <Input
-          id={id}
-          type="number"
-          step={step}
-          min="0"
-          value={value}
-          onChange={(e) => onChange(Number.parseFloat(e.target.value) || 0)}
-          className="pl-7"
-        />
-      </div>
-      <p className="text-xs text-muted-foreground">{description}</p>
-    </div>
-  )
 }
 
 export function DigitalInteractionCost({
@@ -191,10 +152,7 @@ export function DigitalInteractionCost({
             </p>
           </div>
           <p className="font-heading text-3xl font-bold text-foreground">
-            $
-            {totalPerInteraction < 0.01
-              ? totalPerInteraction.toFixed(4)
-              : totalPerInteraction.toFixed(3)}
+            {formatCurrency(totalPerInteraction, totalPerInteraction < 0.01 ? 4 : 3)}
           </p>
         </div>
       </CardContent>
