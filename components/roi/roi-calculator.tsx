@@ -245,6 +245,14 @@ export function RoiCalculator() {
         onLoadDefaults={handleLoadDefaults}
       />
 
+      {/* Results (Breakdown + ROI Showcase) */}
+      <ResultsPanel
+        workflowResults={workflowResults}
+        combinedResults={combinedResults}
+        annualPlatformCost={totalPlatformCost}
+        hasVolumes={hasVolumes}
+      />
+
       {/* Break-Even Stats - Only visible when workflows are present */}
       {hasWorkflows && (
         <div className="-mx-4 border-t bg-muted/30 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -257,14 +265,6 @@ export function RoiCalculator() {
           </div>
         </div>
       )}
-
-      {/* Results */}
-      <ResultsPanel
-        workflowResults={workflowResults}
-        combinedResults={combinedResults}
-        annualPlatformCost={totalPlatformCost}
-        hasVolumes={hasVolumes}
-      />
 
       {/* Dynamic Impact Stats - Only visible when volumes are provided */}
       {hasVolumes && (
